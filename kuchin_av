@@ -1,0 +1,53 @@
+CREATE TABLE "customers" (
+  "customer_id" integer PRIMARY KEY,
+  "first_name" text,
+  "last_name" text,
+  "gender" text,
+  "dob" date,
+  "job_wealth_id" integer,
+  "location_id" integer
+);
+
+CREATE TABLE "jobs_and_wealth" (
+  "jaw_id" integer PRIMARY KEY,
+  "job_title" text,
+  "job_industry" text,
+  "wealth_segment" text,
+  "decease_indicator" text,
+  "own_card" text
+);
+
+CREATE TABLE "locations" (
+  "location_id" integer PRIMARY KEY,
+  "address" text,
+  "postcode" integer,
+  "start" text,
+  "country" text
+);
+
+CREATE TABLE "products" (
+  "product_id" integer PRIMARY KEY,
+  "brand" text,
+  "product_line" text,
+  "product_class" text,
+  "product_size" text,
+  "price" float,
+  "standard_cost" float
+);
+
+CREATE TABLE "transactions" (
+  "transaction_id" integer PRIMARY KEY,
+  "product_id" integer,
+  "customer_id" integer,
+  "transaction_date" date,
+  "online_order" text,
+  "order_status" text
+);
+
+ALTER TABLE "customers" ADD FOREIGN KEY ("job_wealth_id") REFERENCES "jobs_and_wealth" ("jaw_id");
+
+ALTER TABLE "transactions" ADD FOREIGN KEY ("product_id") REFERENCES "products" ("product_id");
+
+ALTER TABLE "customers" ADD FOREIGN KEY ("location_id") REFERENCES "locations" ("location_id");
+
+ALTER TABLE "customers" ADD FOREIGN KEY ("customer_id") REFERENCES "transactions" ("customer_id");
